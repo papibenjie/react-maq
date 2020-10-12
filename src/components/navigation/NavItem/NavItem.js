@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { ThemeContext } from '../../../themes'
 import { Link } from '../../base/Link'
 import tinycolor from 'tinycolor2'
+import { appendStyle } from "../../../utils/propsUtils";
 
 class NavItem extends Component {
 
@@ -29,19 +30,24 @@ class NavItem extends Component {
   render() {
     let color = this.context.navbar.item.hoverColor
 
-    let style = {
+    let props = appendStyle(this.props, {
       color: this.state.hovered ? tinycolor.mostReadable(color, ['black', 'white']) : 'inherit',
       backgroundColor: this.state.hovered ? color : 'transparent',
       textDecoration: 'none',
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'stretch',
+      width: '100%',
       padding: this.context.navbar.item.padding,
-      ...this.props.style,
-    }
+    })
 
+    let enterEvent = this.props.hoverAnim ? this.onMouseEnter.bind(this) : null;
+    let leaveEvent = this.props.hoverAnim ? this.onMouseLeave.bind(this) : null;
+    
     return (
-      <Link onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)} style={style} href={this.props.href}>
-        {this.props.children}
+      <Link {...props} onMouseEnter={enterEvent} onMouseLeave={leaveEvent} >
+        <div style={{display: "flex", alignItems: "center"}}>
+          {this.props.children}
+        </div>
       </Link>
     )   
   }
@@ -49,7 +55,13 @@ class NavItem extends Component {
 
 NavItem.propTypes = {
   children: PropTypes.any,
-  href: PropTypes.string
+  hoverAnim: PropTypes.bool,
+  href: PropTypes.string,
+}
+
+NavItem.defaultProps = {
+  hoverAnim: true,
+  href: "https://google.com",
 }
 
 NavItem.contextType = ThemeContext

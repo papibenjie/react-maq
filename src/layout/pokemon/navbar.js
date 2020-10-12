@@ -6,7 +6,7 @@ import { NavItem } from "../../components/navigation/NavItem";
 import logo from '../../logo.svg'
 
 const PokeNavbar = args => (
-    <Navbar justifyContent="space-evenly" height="60px">
+    <Navbar height="60px">
         <Navbar.Section>
             <NavBrand icon={logo} title="PokemonMAQ" />
         </Navbar.Section>
