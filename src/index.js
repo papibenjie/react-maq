@@ -4,9 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { ThemeContext } from './themes'
+import { Default } from './themes/default'
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeContext.Provider value={Default}>
+      <App />
+    </ThemeContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
